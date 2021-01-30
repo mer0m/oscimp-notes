@@ -197,8 +197,8 @@ make install
 ```
 Add python wrapper to the buildroot overlay:
 ```
-mkdir -p ~/git/redpitaya/board/redpitaya/overlay/usr/lib/python3.7/site-packages/
-cp liboscimp_fpga.py ~/git/redpitaya/board/redpitaya/overlay/usr/lib/python3.7/site-packages/
+mkdir -p ~/git/redpitaya/board/redpitaya/overlay/usr/lib/python3.9/site-packages/
+cp liboscimp_fpga.py ~/git/redpitaya/board/redpitaya/overlay/usr/lib/python3.9/site-packages/
 ```
 
 Make drivers:
