@@ -5,7 +5,7 @@ We assume the final folder tree will be as following:
 ```
 ~
 └── git
-    ├── buildroot-2019.05.1
+    ├── buildroot-2020.11.1
     ├── oscimpDigital
     └── redpitaya
 ```
@@ -19,8 +19,8 @@ cd ~/git
 
 Get the lastest version of buildroot compatible:
 ```
-wget https://buildroot.org/downloads/buildroot-2019.05.1.tar.gz
-tar -xf buildroot-2019.05.1.tar.gz
+wget https://buildroot.org/downloads/buildroot-2020.11.1.tar.gz
+tar -xf buildroot-2020.11.1.tar.gz
 ```
 
 ## Prepare redpitaya support for buildroot
@@ -54,7 +54,7 @@ Specify your setup with following variables:
 
 `BOARD_NAME='redpitaya'`
 
-`BR_DIR=~/git/buildroot-2019.05.1/`
+`BR_DIR=~/git/buildroot-2020.11.1/`
 
 ### Example of `settings.sh`
 ```bash
@@ -66,7 +66,7 @@ Specify your setup with following variables:
 export BOARD_NAME='redpitaya'
 
 #define Buildroot location
-export BR_DIR='~/git/buildroot-2019.05.1/'
+export BR_DIR='~/git/buildroot-2020.11.1/'
 
 # define target IP
 # 192.168.0.10 for RedPitaya
@@ -104,7 +104,7 @@ source oscimpDigital/settings.sh
 
 Go to buildroot dir.
 ```
-cd buildroot-2019.05.1
+cd buildroot-2020.11.1
 ```
 
 Set the default configuration.
@@ -211,7 +211,7 @@ make install_nfsdir
 ## Make your complete buildroot (really !)
 
 ```
-cd ~/git/buildroot-2019.05.1
+cd ~/git/buildroot-2020.11.1
 make
 ```
 
