@@ -1,0 +1,3 @@
+[submodule "redpitaya"]
+	path = redpitaya
+	url = https://github.com/mer0m/redpitaya.git
