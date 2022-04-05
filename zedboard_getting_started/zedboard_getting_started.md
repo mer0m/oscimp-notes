@@ -1,13 +1,13 @@
-# Getting started with Redpitaya STEM 125-14
+# Getting started with ZedBoard
 
 We assume the final folder tree will be as following:
 
 ```
 ~
 └── git
-    ├── buildroot-2020.11.1
+    ├── buildroot-2019.05.1
     ├── oscimpDigital
-    └── redpitaya
+    └── zedboard_br2_external
 ```
 
 ```
@@ -17,20 +17,20 @@ cd ~/git
 
 ## Prepare a buildroot
 
-Get the lastest version of buildroot compatible:
+Get buildroot:
 ```
-wget https://buildroot.org/downloads/buildroot-2020.11.1.tar.gz
-tar -xf buildroot-2020.11.1.tar.gz
-```
-
-## Prepare redpitaya support for buildroot
-
-```
-git clone https://github.com/trabucayre/redpitaya.git
+wget https://buildroot.org/downloads/buildroot-2019.05.1.tar.gz
+tar -xvf buildroot-2019.05.1.tar.gz
 ```
 
-Check the network configuration of the redpitaya in the `redpitaya/boards/redpitaya/overlay/etc/network/interfaces` file.
-[Trabucayre's readme](https://github.com/trabucayre/redpitaya/blob/master/README.md#ip-address) contains examples for static interface.
+## Prepare zedboard support for buildroot
+
+```
+git clone https://github.com/mer0m/zedboard_br2_external.git
+```
+
+Check the network configuration of the zedboard in the `zedboard_br2_external/board/avnet/zedboard/overlay/etc/network/interfaces` file.
+[Trabucayre's readme](https://github.com/trabucayre/zedboard/blob/master/README.md#ip-address) contains examples for static interface.
 
 ## Get oscimpDigital
 
@@ -40,9 +40,9 @@ git clone --recursive https://github.com/oscimp/oscimpDigital.git
 
 ## Prepare bash environment
 
-Add redpitaya board to buildroot.
+Add zedboard board to buildroot.
 ```
-source redpitaya/sourceme.ggm
+source zedboard_br2_external/sourceme.ggm
 ```
 
 Create your `oscimpDigital/settings.sh` to link oscimpDigital to buildroot.
@@ -52,24 +52,24 @@ cp oscimpDigital/settings.sh.sample oscimpDigital/settings.sh
 
 Specify your setup with following variables:
 
-`BOARD_NAME='redpitaya'`
+`BOARD_NAME='zedboard'`
 
-`BR_DIR=~/git/buildroot-2020.11.1/`
+`BR_DIR=~/git/buildroot-2019.05.1/`
 
 ### Example of `settings.sh`
 ```bash
 # define the board being used. Must be adapted to either:
 # plutosdr for the Xilinx Zynq-based ADI PlutoSDR board
-# redpitaya for the Xilinx Zynq-based 14-bit legacy Red Pitaya board
-# redpitaya16 for the new Xilinx Zynq-based 16-bit Red Pitaya board
+# zedboard for the Xilinx Zynq-based 14-bit legacy Red Pitaya board
+# zedboard16 for the new Xilinx Zynq-based 16-bit Red Pitaya board
 # de0nansoc for the Altera/Intel Terrasic DE0Nano SoC
-export BOARD_NAME='redpitaya'
+export BOARD_NAME='zedboard'
 
 #define Buildroot location
-export BR_DIR='~/git/buildroot-2020.11.1/'
+export BR_DIR='~/git/buildroot-2019.05.1/'
 
 # define target IP
-# 192.168.0.10 for RedPitaya
+# 192.168.0.10 for zedboard
 # 192.168.2.1 for PlutoSDR
 export IP=192.168.0.10
 
@@ -104,12 +104,12 @@ source oscimpDigital/settings.sh
 
 Go to buildroot dir.
 ```
-cd buildroot-2020.11.1
+cd buildroot-2019.05.1
 ```
 
 Set the default configuration.
 ```
-make redpitaya_defconfig
+make zedboard_defconfig
 ```
 
 Add optional packages for the specific application.
@@ -137,7 +137,7 @@ An image of the sdcard is created in `output/images/sdcard.img`.
 
 ## NFS
 
-The drivers and apps are not physically on the redpitaya but on a file server (using NFS protocol).
+The drivers and apps are not physically on the zedboard but on a file server (using NFS protocol).
 
 ### NFS server on your PC
 
@@ -168,16 +168,16 @@ You can allow a range of ip to acces to your nfs server with a netmask:
 /nfs    192.168.0.10/255.255.255.0(rw,no_root_squash,sync)
 ```
 
-### NFS client on redpitaya
+### NFS client on zedboard
 
-Edit the redpitaya's `~/git/redpitaya/board/redpitaya/overlay/etc/fstab` to add the distant folder at the end of the file:
+Edit the zedboard's `~/zedboard_br2_external/board/avnet/zedboard/overlay/etc/fstab` to add the distant folder at the end of the file:
 ```
 192.168.0.1:/nfs /usr/remote nfs defaults,noauto,nolock 0  0
 ```
 
-And create the `remote` folder on the redpitaya:
+And create the `remote` folder on the zedboard:
 ```
-mkdir ~/git/redpitaya/board/redpitaya/overlay/remote
+mkdir -p ~/zedboard_br2_external/board/avnet/zedboard/overlay/usr/remote
 ```
 
 ## Build oscimpDigital tools, drivers and lib
@@ -195,11 +195,6 @@ cd ~/git/oscimpDigital/lib
 make
 make install
 ```
-Add python wrapper to the buildroot overlay:
-```
-mkdir -p ~/git/redpitaya/board/redpitaya/overlay/usr/lib/python3.9/site-packages/
-cp liboscimp_fpga.py ~/git/redpitaya/board/redpitaya/overlay/usr/lib/python3.9/site-packages/
-```
 
 Make drivers:
 ```
@@ -208,10 +203,10 @@ make
 make install_nfsdir
 ```
 
-## Make your complete buildroot (really !)
+## Make your customized buildroot
 
 ```
-cd ~/git/buildroot-2020.11.1
+cd ~/git/buildroot-2019.05.1
 make
 ```
 
@@ -226,18 +221,18 @@ It should be like `/dev/sdX`.
 
 Extract to sdcard (here, to `/dev/sdb`):
 ```
-sudo dd if=output/images/sdcard.img of=/dev/sdb bs=4M
+sudo dd if=output/images/sdcard.img of=/dev/sdb bs=4M oflag=dsync status=progress
 ```
 
-Insert the sdcard on the redpitaya and power on.
-The green LED should be on, and the red LED will blink.
+Insert the sdcard on the zedboard and power on.
+The green LED should be on.
 
-Connect to your redpitaya through ssh:
+Connect to your zedboard through ssh:
 ```
 ssh root@192.168.0.10
 ```
 
-or by USB (com connector on redpitaya)
+or by USB (com connector on zedboard)
 ```
 minicom -D /dev/ttyUSB0
 ```
@@ -320,10 +315,10 @@ bootgen
 
 ## Create your first application
 
-Here, we will use the [double_dds](https://github.com/oscimp/app/tree/master/redpitaya/double_dds) application.
+Here, we will use the [double_dds](https://github.com/oscimp/app/tree/master/zedboard/double_dds) application.
 
 ```
-cd ~/git/oscimpDigital/app/redpitaya/double_dds
+cd ~/git/oscimpDigital/app/zedboard/double_dds
 
 ```
 
@@ -346,7 +341,7 @@ We can use a simple *HelloWorld*:
 ```c
 #include <stdio.h>
 int main() {
-   printf("Hello from Redpitaya!\n");
+   printf("Hello from zedboard!\n");
    return 0;
 }
 
@@ -358,7 +353,7 @@ make install
 make install_webserver
 ```
 
-### Run it on redpitaya
+### Run it on zedboard
 
 ```
 ssh root@192.168.0.10
