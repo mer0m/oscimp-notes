@@ -30,7 +30,7 @@ git clone https://github.com/mer0m/zedboard_br2_external.git
 ```
 
 Check the network configuration of the zedboard in the `zedboard_br2_external/board/avnet/zedboard/overlay/etc/network/interfaces` file.
-[Trabucayre's readme](https://github.com/trabucayre/zedboard/blob/master/README.md#ip-address) contains examples for static interface.
+[Trabucayre's readme](https://github.com/trabucayre/redpitaya/blob/master/README.md#ip-address) contains examples for static interface.
 
 ## Get oscimpDigital
 
