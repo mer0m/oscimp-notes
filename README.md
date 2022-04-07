@@ -1,4 +1,4 @@
-# OscImp Notes
+# [OscImp Notes](https://mer0m.github.io/oscimp-notes)
 
 Notes for the [OscimpDigital](https://github.com/oscimp/OscimpDigital) project.
 
