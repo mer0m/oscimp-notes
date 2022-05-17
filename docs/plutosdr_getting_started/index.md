@@ -184,7 +184,7 @@ make dfu_frm
 
 This last command could fail. To solve it:
 ```
-/home/bma/git/PlutoSDR/board/pluto/post_image.sh image/
+$HOME/git/PlutoSDR/board/pluto/post_image.sh image/
 ```
 
 ### Flash the plutosdr
