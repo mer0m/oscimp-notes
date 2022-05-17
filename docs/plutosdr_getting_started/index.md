@@ -210,7 +210,7 @@ We will use a webserver instead of the C app.
 cd app
 rm main.c
 make
-make install SUPP_FILE='*_webserver.py
+make install_ssh SUPP_FILE='*_webserver.py
 ```
 
 ### Run it on plutosdr
