@@ -7,3 +7,7 @@ Notes for the [OscimpDigital](https://github.com/oscimp/OscimpDigital) project.
 [ZedBoard](zedboard_getting_started/index.md)
 
 [PlutoSDR](plutosdr_getting_started/index.md)
+
+---
+
+## [Publications](publications/publications.html)
