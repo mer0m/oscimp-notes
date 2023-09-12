@@ -184,7 +184,7 @@ make dfu_frm
 
 This last command could fail. To solve it:
 ```
-/home/bma/git/PlutoSDR/board/pluto/post_image.sh image/
+$HOME/git/PlutoSDR/board/pluto/post_image.sh image/
 ```
 
 ### Flash the plutosdr
@@ -210,7 +210,7 @@ We will use a webserver instead of the C app.
 cd app
 rm main.c
 make
-make install SUPP_FILE='*_webserver.py
+make install_ssh SUPP_FILE='*_webserver.py
 ```
 
 ### Run it on plutosdr
